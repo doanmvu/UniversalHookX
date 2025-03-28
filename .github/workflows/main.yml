@@ -12,23 +12,14 @@ jobs:
         with:
           submodules: recursive  # Ensure submodules are cloned
 
-      - name: Install Python (for Meson)
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.x"
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.1
 
-      - name: Install Meson and Ninja
-        run: |
-          python -m pip install --upgrade pip
-          pip install meson ninja
-
-      - name: Configure and Build with Meson
-        run: |
-          meson setup build --backend=ninja
-          meson compile -C build
+      - name: Build with MSBuild
+        run: msbuild UniversalHookX.sln /p:Configuration=Release /p:Platform=x64
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: UniversalHookX-DLL
-          path: build/**/*.dll
+          path: build/Release/*.dll
