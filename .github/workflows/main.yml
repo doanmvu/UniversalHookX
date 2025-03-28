@@ -18,7 +18,7 @@ jobs:
       - name: Build with MSBuild
         run: msbuild UniversalHookX.sln /p:Configuration=Release /p:Platform=x64
 
-      - name: Debug: Find Generated Files
+      - name: Debug Find Generated Files
         shell: pwsh
         run: |
           Get-ChildItem -Path . -Recurse | Select-Object FullName | Out-File file_list.txt
