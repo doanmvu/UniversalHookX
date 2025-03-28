@@ -12,17 +12,23 @@ jobs:
         with:
           submodules: recursive  # Ensure submodules are cloned
 
-      - name: Install CMake
-        uses: jwlawson/actions-setup-cmake@v1
+      - name: Install Python (for Meson)
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
 
-      - name: Configure CMake
-        run: cmake -B build -A x64 .
+      - name: Install Meson and Ninja
+        run: |
+          python -m pip install --upgrade pip
+          pip install meson ninja
 
-      - name: Build Project
-        run: cmake --build build --config Release
+      - name: Configure and Build with Meson
+        run: |
+          meson setup build --backend=ninja
+          meson compile -C build
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: UniversalHookX-DLL
-          path: build/Release/*.dll
+          path: build/**/*.dll
