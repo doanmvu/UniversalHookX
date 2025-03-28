@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Updated to latest version
 
       - name: Install CMake
         uses: jwlawson/actions-setup-cmake@v1
@@ -20,7 +20,7 @@ jobs:
         run: cmake --build build --config Release
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # Updated to latest version
         with:
           name: UniversalHookX-DLL
           path: build/Release/*.dll
