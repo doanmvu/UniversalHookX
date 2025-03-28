@@ -18,16 +18,17 @@ jobs:
       - name: Build with MSBuild
         run: msbuild UniversalHookX.sln /p:Configuration=Release /p:Platform=x64
 
-      - name: Find Generated Files (Debug Step)
-        run: dir /s /b > file_list.txt
+      - name: Debug: Find Generated Files
+        shell: pwsh
+        run: Get-ChildItem -Path . -Recurse | Select-Object FullName | Out-File file_list.txt
 
-      - name: Upload File List (Debug)
+      - name: Upload File List (Debugging)
         uses: actions/upload-artifact@v4
         with:
           name: Debug-File-List
           path: file_list.txt
 
-      - name: Upload Artifacts (Final DLLs)
+      - name: Upload DLLs (Final Artifacts)
         uses: actions/upload-artifact@v4
         with:
           name: UniversalHookX-DLL
