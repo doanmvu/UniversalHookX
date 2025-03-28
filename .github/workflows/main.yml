@@ -10,7 +10,7 @@ jobs:
       - name: Checkout Repository (with Submodules)
         uses: actions/checkout@v4
         with:
-          submodules: recursive  # Ensure submodules are cloned
+          submodules: recursive  # Ensures submodules are cloned
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1.1
@@ -20,7 +20,8 @@ jobs:
 
       - name: Debug: Find Generated Files
         shell: pwsh
-        run: Get-ChildItem -Path . -Recurse | Select-Object FullName | Out-File file_list.txt
+        run: |
+          Get-ChildItem -Path . -Recurse | Select-Object FullName | Out-File file_list.txt
 
       - name: Upload File List (Debugging)
         uses: actions/upload-artifact@v4
