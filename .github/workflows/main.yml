@@ -1,0 +1,26 @@
+name: Build UniversalHookX
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install CMake
+        uses: jwlawson/actions-setup-cmake@v1
+
+      - name: Configure CMake
+        run: cmake -B build -A x64 .
+
+      - name: Build Project
+        run: cmake --build build --config Release
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: UniversalHookX-DLL
+          path: build/Release/*.dll
